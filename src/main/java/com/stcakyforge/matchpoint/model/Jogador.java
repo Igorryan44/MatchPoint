@@ -30,5 +30,110 @@ public class Jogador {
 
     private int saldoGols;
 
-    private List<Object> ultimasPartidas;
+    private List<Partida> ultimasPartidas;
+
+    public Jogador() {
+    }
+
+    public Jogador(Long id, String nome, int pontos, int partidasJogadas, int vitorias, int empate, int derrota, int golsMarcados, int golsSofridos, int saldoGols, List<Partida> ultimasPartidas) {
+        this.id = id;
+        this.nome = nome;
+        this.pontos = pontos;
+        this.partidasJogadas = partidasJogadas;
+        this.vitorias = vitorias;
+        this.empate = empate;
+        this.derrota = derrota;
+        this.golsMarcados = golsMarcados;
+        this.golsSofridos = golsSofridos;
+        this.saldoGols = saldoGols;
+        this.ultimasPartidas = ultimasPartidas;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getPontos() {
+        return pontos;
+    }
+
+    public void setPontos(int pontos) {
+        this.pontos = pontos;
+    }
+
+    public int getPartidasJogadas() {
+        return partidasJogadas;
+    }
+
+    public void setPartidasJogadas(int partidasJogadas) {
+        this.partidasJogadas = partidasJogadas;
+    }
+
+    public int getVitorias() {
+        return vitorias;
+    }
+
+    public void setVitorias(int vitorias) {
+        this.vitorias = vitorias;
+    }
+
+    public int getEmpate() {
+        return empate;
+    }
+
+    public void setEmpate(int empate) {
+        this.empate = empate;
+    }
+
+    public int getDerrota() {
+        return derrota;
+    }
+
+    public void setDerrota(int derrota) {
+        this.derrota = derrota;
+    }
+
+    public int getGolsMarcados() {
+        return golsMarcados;
+    }
+
+    public void setGolsMarcados(int golsMarcados) {
+        this.golsMarcados = golsMarcados;
+    }
+
+    public int getGolsSofridos() {
+        return golsSofridos;
+    }
+
+    public void setGolsSofridos(int golsSofridos) {
+        this.golsSofridos = golsSofridos;
+    }
+
+    public int getSaldoGols() {
+        return saldoGols;
+    }
+
+    public void setSaldoGols(int saldoGols) {
+        this.saldoGols = saldoGols;
+    }
+
+    public List<Partida> getUltimasPartidas() {
+        return ultimasPartidas;
+    }
+
+    public void setUltimasPartidas(List<Partida> ultimasPartidas) {
+        this.ultimasPartidas = ultimasPartidas;
+    }
 }
