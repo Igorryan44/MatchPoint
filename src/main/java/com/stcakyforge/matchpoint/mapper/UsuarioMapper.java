@@ -15,7 +15,5 @@ public interface UsuarioMapper {
 
     List<UsuarioResponseDto> toDto (List<Usuario> usuarios);
 
-    Usuario toEntity(Optional<UsuarioRequestDto> usuarioRequest);
-
     Usuario toEntity(UsuarioRequestDto usuarioRequest);
 }

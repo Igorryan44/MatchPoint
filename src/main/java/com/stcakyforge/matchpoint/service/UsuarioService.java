@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -40,24 +41,24 @@ public class UsuarioService {
 
     public UsuarioResponseDto atualizarUsuario(Long id, UsuarioRequestDto usuario){
 
-        Usuario newUsuario = mapper.toEntity(pegarUsuarioPorId(id));
+        Usuario newUsuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no banco de dados"));
 
         newUsuario.setId(id);
-        newUsuario.setUsername(usuario.username() != newUsuario.getUsername() ? newUsuario.getUsername() : usuario.username());
-        newUsuario.setEmail(usuario.email() != newUsuario.getEmail() ? newUsuario.getEmail() : usuario.email());
+        newUsuario.setUsername(!Objects.equals(usuario.username(), newUsuario.getUsername()) ? usuario.username() : newUsuario.getUsername());
+        newUsuario.setEmail(!Objects.equals(usuario.email(), newUsuario.getEmail()) ? usuario.email() : newUsuario.getEmail());
 
-        return mapper.toDto(mapper.toEntity(Optional.of(usuarioRepository.save(newUsuario))));
+        return mapper.toDto(newUsuario);
     }
 
     public UsuarioResponseDto atualizarSenha(Long id, String novaSenha){
 
-        Usuario usuario = mapper.toEntity(usuarioRepository.findById(id));
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no banco de dados"));
 
         usuario.setId(id);
         usuario.setUsername(usuario.getUsername());
         usuario.setEmail(usuario.getEmail());
         usuario.setSenha(novaSenha);
 
-        return mapper.toDto(mapper.toEntity(Optional.of(usuarioRepository.save(usuario))));
+        return mapper.toDto(usuarioRepository.save(usuario));
     }
 }

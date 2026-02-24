@@ -2,8 +2,6 @@ package com.stcakyforge.matchpoint.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "championship")
 public class Campeonato {
@@ -15,13 +13,16 @@ public class Campeonato {
 
     private int qtdJogadores;
 
+    private int qtdPartidas;
+
     public Campeonato() {
     }
 
-    public Campeonato(Long id, String campNome, int qtdJogadores) {
+    public Campeonato(Long id, String campNome, int qtdJogadores, int qtdPartidas) {
         this.id = id;
         this.campNome = campNome;
         this.qtdJogadores = qtdJogadores;
+        this.qtdPartidas = qtdPartidas;
     }
 
     public Long getId() {
@@ -46,5 +47,13 @@ public class Campeonato {
 
     public void setQtdJogadores(int qtdJogadores) {
         this.qtdJogadores = qtdJogadores;
+    }
+
+    public int getQtdPartidas() {
+        return qtdPartidas;
+    }
+
+    public void setQtdPartidas(int qtdPartidas) {
+        this.qtdPartidas = qtdPartidas;
     }
 }
