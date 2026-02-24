@@ -1,11 +1,10 @@
 FROM maven:3.9.12-eclipse-temurin-21 AS build
 
 WORKDIR /app
-
 COPY src /app/src
-copy pom.xml /app
 
 WORKDIR /app
+copy pom.xml .
 RUN mvn clean install
 
 FROM eclipse-temurin:21-jre-alpine
