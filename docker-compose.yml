@@ -1,13 +1,10 @@
-version: '3.9'
-
 services:
-  app:
+  matchpoint:
     build: .
     container_name: matchpoint
     ports:
       - "8080:8080"
     volumes:
-      - .:/app
       - maven_cache:/root/.m2
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/db_matchpoint
