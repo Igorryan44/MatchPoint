@@ -3,7 +3,7 @@ package com.stcakyforge.matchpoint.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "championship")
+@Table(name = "campeonato")
 public class Campeonato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
