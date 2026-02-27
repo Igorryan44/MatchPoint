@@ -5,7 +5,5 @@ public record UsuarioResponseDto (
 
         String username,
 
-        String email,
-
-        String senha
+        String email
 ){}
