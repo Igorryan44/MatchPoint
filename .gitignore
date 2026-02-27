@@ -99,3 +99,4 @@ hs_err_pid*
 # Project
 application.properties
 .gitattributes
+planning/
