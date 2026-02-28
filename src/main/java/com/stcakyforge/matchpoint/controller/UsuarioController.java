@@ -33,9 +33,14 @@ public class UsuarioController {
         return usuarioService.pegarUsuarioPorId(id);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}/edit/password")
+    public ResponseEntity<UsuarioResponseDto> atualizarSenhaUsuario(@PathVariable Long id, @RequestBody String novaSenha) {
+        return ResponseEntity.ok(usuarioService.atualizarSenha(id, novaSenha));
+    }
+
+    @PutMapping("/{id}/edit")
     public ResponseEntity<UsuarioResponseDto> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioRequestDto usuarioRequestDto) {
-        return ResponseEntity.ok(usuarioService.salvarUsuario(usuarioRequestDto));
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(id, usuarioRequestDto));
     }
 
     @DeleteMapping("/{id}")
