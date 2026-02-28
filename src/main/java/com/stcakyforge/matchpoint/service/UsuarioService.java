@@ -1,5 +1,6 @@
 package com.stcakyforge.matchpoint.service;
 
+import com.stcakyforge.matchpoint.dtos.request.SenhaRequestDto;
 import com.stcakyforge.matchpoint.dtos.request.UsuarioRequestDto;
 import com.stcakyforge.matchpoint.dtos.response.UsuarioResponseDto;
 import com.stcakyforge.matchpoint.mapper.UsuarioMapper;
@@ -10,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.Objects;
@@ -57,14 +59,11 @@ public class UsuarioService {
         return mapper.toDto(usuarioRepository.save(newUsuario));
     }
 
-    public void atualizarSenha(Long id, String novaSenha){
+    public void atualizarSenha(Long id, SenhaRequestDto novaSenha){
 
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no banco de dados"));
 
-        usuario.setId(id);
-        usuario.setUsername(usuario.getUsername());
-        usuario.setEmail(usuario.getEmail());
-        usuario.setSenha(novaSenha);
+        usuario.setSenha(novaSenha.novaSenha());
         usuarioRepository.save(usuario);
     }
 }

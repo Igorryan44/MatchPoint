@@ -1,5 +1,6 @@
 package com.stcakyforge.matchpoint.controller;
 
+import com.stcakyforge.matchpoint.dtos.request.SenhaRequestDto;
 import com.stcakyforge.matchpoint.dtos.request.UsuarioRequestDto;
 import com.stcakyforge.matchpoint.dtos.response.UsuarioResponseDto;
 import com.stcakyforge.matchpoint.service.UsuarioService;
@@ -34,7 +35,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}/edit/password")
-    public ResponseEntity<Void> atualizarSenhaUsuario(@PathVariable Long id, @RequestBody String novaSenha) {
+    public ResponseEntity<Void> atualizarSenhaUsuario(@PathVariable Long id, @RequestBody SenhaRequestDto novaSenha) {
         usuarioService.atualizarSenha(id, novaSenha);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
