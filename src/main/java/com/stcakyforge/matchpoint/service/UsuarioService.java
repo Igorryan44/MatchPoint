@@ -36,7 +36,7 @@ public class UsuarioService {
     }
 
     public void deleteUsuario(Long id){
-        usuarioRepository.findById(id);
+        usuarioRepository.deleteById(id);
     }
 
     public UsuarioResponseDto atualizarUsuario(Long id, UsuarioRequestDto usuario){
@@ -47,10 +47,10 @@ public class UsuarioService {
         newUsuario.setUsername(!Objects.equals(usuario.username(), newUsuario.getUsername()) ? usuario.username() : newUsuario.getUsername());
         newUsuario.setEmail(!Objects.equals(usuario.email(), newUsuario.getEmail()) ? usuario.email() : newUsuario.getEmail());
 
-        return mapper.toDto(newUsuario);
+        return mapper.toDto(usuarioRepository.save(newUsuario));
     }
 
-    public UsuarioResponseDto atualizarSenha(Long id, String novaSenha){
+    public void atualizarSenha(Long id, String novaSenha){
 
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no banco de dados"));
 
@@ -58,7 +58,6 @@ public class UsuarioService {
         usuario.setUsername(usuario.getUsername());
         usuario.setEmail(usuario.getEmail());
         usuario.setSenha(novaSenha);
-
-        return mapper.toDto(usuarioRepository.save(usuario));
+        usuarioRepository.save(usuario);
     }
 }

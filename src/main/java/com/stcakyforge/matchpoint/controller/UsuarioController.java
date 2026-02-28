@@ -34,8 +34,9 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}/edit/password")
-    public ResponseEntity<UsuarioResponseDto> atualizarSenhaUsuario(@PathVariable Long id, @RequestBody String novaSenha) {
-        return ResponseEntity.ok(usuarioService.atualizarSenha(id, novaSenha));
+    public ResponseEntity<Void> atualizarSenhaUsuario(@PathVariable Long id, @RequestBody String novaSenha) {
+        usuarioService.atualizarSenha(id, novaSenha);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("/{id}/edit")
