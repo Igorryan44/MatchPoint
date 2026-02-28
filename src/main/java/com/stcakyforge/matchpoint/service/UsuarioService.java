@@ -5,7 +5,10 @@ import com.stcakyforge.matchpoint.dtos.response.UsuarioResponseDto;
 import com.stcakyforge.matchpoint.mapper.UsuarioMapper;
 import com.stcakyforge.matchpoint.model.Usuario;
 import com.stcakyforge.matchpoint.repository.UsuarioRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +26,12 @@ public class UsuarioService {
         this.mapper = mapper;
     }
 
-    public UsuarioResponseDto salvarUsuario(UsuarioRequestDto requestDto){
-        return mapper.toDto(usuarioRepository.save(mapper.toEntity(requestDto)));
+    public ResponseEntity<UsuarioResponseDto> salvarUsuario(UsuarioRequestDto requestDto){
+        if (usuarioRepository.existsByEmail(requestDto.email())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
+        return ResponseEntity.ok(mapper.toDto(usuarioRepository.save(mapper.toEntity(requestDto))));
     }
 
     public List<UsuarioResponseDto> listaUsuarios(){
