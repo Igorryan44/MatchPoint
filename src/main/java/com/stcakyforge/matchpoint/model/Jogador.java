@@ -30,6 +30,12 @@ public class Jogador {
 
     private int saldoGols;
 
+    private String time;
+
+    @ManyToOne
+    @JoinColumn(name = "campeonato_id")
+    private Campeonato campeonato;
+
     @OneToMany(mappedBy = "jogador1")
     private List<Partida> partidasComoJogador1;
 
@@ -41,7 +47,7 @@ public class Jogador {
     public Jogador() {
     }
 
-    public Jogador(Long id, String nome, int pontos, int partidasJogadas, int vitorias, int empate, int derrota, int golsMarcados, int golsSofridos, int saldoGols, List<Partida> partidasComoJogador1, List<Partida> partidasComoJogador2, int partidasTotais) {
+    public Jogador(Long id, String nome, int pontos, int partidasJogadas, int vitorias, int empate, int derrota, int golsMarcados, int golsSofridos, int saldoGols, List<Partida> partidasComoJogador1, List<Partida> partidasComoJogador2, int partidasTotais, String time, Campeonato campeonato) {
         this.id = id;
         this.nome = nome;
         this.pontos = pontos;
@@ -55,6 +61,8 @@ public class Jogador {
         this.partidasComoJogador1 = partidasComoJogador1;
         this.partidasComoJogador2 = partidasComoJogador2;
         this.partidasTotais = partidasTotais;
+        this.time = time;
+        this.campeonato = campeonato;
     }
 
     public Long getId() {
@@ -159,5 +167,21 @@ public class Jogador {
 
     public void setPartidasTotais(int partidasTotais) {
         this.partidasTotais = partidasTotais;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Campeonato getCampeonato() {
+        return campeonato;
+    }
+
+    public void setCampeonato(Campeonato campeonato) {
+        this.campeonato = campeonato;
     }
 }

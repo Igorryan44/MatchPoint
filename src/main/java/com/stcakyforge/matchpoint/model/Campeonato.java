@@ -2,6 +2,8 @@ package com.stcakyforge.matchpoint.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "campeonato")
 public class Campeonato {
@@ -15,14 +17,18 @@ public class Campeonato {
 
     private int qtdPartidas;
 
+    @OneToMany(mappedBy = "campeonato")
+    private List<Jogador> jogadores;
+
     public Campeonato() {
     }
 
-    public Campeonato(Long id, String campNome, int qtdJogadores, int qtdPartidas) {
+    public Campeonato(Long id, String campNome, int qtdJogadores, int qtdPartidas, List<Jogador> jogadores) {
         this.id = id;
         this.campNome = campNome;
         this.qtdJogadores = qtdJogadores;
         this.qtdPartidas = qtdPartidas;
+        this.jogadores = jogadores;
     }
 
     public Long getId() {
@@ -55,5 +61,13 @@ public class Campeonato {
 
     public void setQtdPartidas(int qtdPartidas) {
         this.qtdPartidas = qtdPartidas;
+    }
+
+    public List<Jogador> getJogadores() {
+        return jogadores;
+    }
+
+    public void setJogadores(List<Jogador> jogadores) {
+        this.jogadores = jogadores;
     }
 }
