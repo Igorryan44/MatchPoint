@@ -1,10 +1,9 @@
 package com.stcakyforge.matchpoint.dtos.response;
 
+import java.util.List;
+
 import com.stcakyforge.matchpoint.model.Campeonato;
 import com.stcakyforge.matchpoint.model.Partida;
-import jakarta.persistence.OneToMany;
-
-import java.util.List;
 
 public record JogadorResponseDto(
         Long id,

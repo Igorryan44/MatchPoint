@@ -5,6 +5,7 @@ import com.stcakyforge.matchpoint.dtos.response.JogadorResponseDto;
 import com.stcakyforge.matchpoint.mapper.JogadorMapper;
 import com.stcakyforge.matchpoint.model.Campeonato;
 import com.stcakyforge.matchpoint.model.Jogador;
+import com.stcakyforge.matchpoint.repository.CampeonatoRepository;
 import com.stcakyforge.matchpoint.repository.JogadorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,13 @@ import java.util.List;
 public class JogadorService {
 
     private final JogadorRepository jogadorRepository;
+    private final CampeonatoRepository campeonatoRepository;
     private final JogadorMapper mapper;
 
-    public JogadorService(JogadorRepository jogadorRepository, JogadorMapper mapper) {
+    public JogadorService(JogadorRepository jogadorRepository, JogadorMapper mapper, CampeonatoRepository campeonatoRepository) {
         this.jogadorRepository = jogadorRepository;
         this.mapper = mapper;
+        this.campeonatoRepository = campeonatoRepository;
     }
 
     public ResponseEntity<JogadorResponseDto> criarJogador(JogadorRequestDto request) {
@@ -42,8 +45,8 @@ public class JogadorService {
     }
 
     public ResponseEntity<List<JogadorResponseDto>> pegarJogadoresPorCampeopnato(Long idCampeonato) throws Throwable {
-        if (jogadorRepository.findCampeonatosPorId(idCampeonato).isPresent()) {
-            Campeonato campeonato = (Campeonato) jogadorRepository.findCampeonatosPorId(idCampeonato).orElseThrow(() -> new EntityNotFoundException("Campeonato não encontrado!"));
+        if (campeonatoRepository.findById(idCampeonato).isPresent()) {
+            Campeonato campeonato = campeonatoRepository.findById(idCampeonato).orElseThrow(() -> new EntityNotFoundException("Campeonato não encontrado!"));
 
             return ResponseEntity.ok(mapper.toDto(campeonato.getJogadores()));
         }

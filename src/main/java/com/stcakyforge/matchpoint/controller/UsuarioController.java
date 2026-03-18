@@ -1,17 +1,14 @@
 package com.stcakyforge.matchpoint.controller;
 
-import com.stcakyforge.matchpoint.dtos.request.EmailRequestDto;
-import com.stcakyforge.matchpoint.dtos.request.SenhaRequestDto;
-import com.stcakyforge.matchpoint.dtos.request.UsuarioRequestDto;
-import com.stcakyforge.matchpoint.dtos.response.UsuarioResponseDto;
-import com.stcakyforge.matchpoint.service.UsuarioService;
-import jakarta.validation.Valid;
-import org.apache.coyote.Response;
-import org.springframework.http.HttpStatus;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.stcakyforge.matchpoint.dtos.request.*;
+import com.stcakyforge.matchpoint.dtos.response.UsuarioResponseDto;
+import com.stcakyforge.matchpoint.service.UsuarioService;
 
-import java.util.List;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")

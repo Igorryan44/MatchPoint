@@ -1,5 +1,6 @@
 package com.stcakyforge.matchpoint.model;
 
+import com.stcakyforge.matchpoint.enums.CampTypes;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class Campeonato {
 
     private int qtdPartidas;
 
+    private CampTypes estiloPontuacao;
+
     @OneToMany(mappedBy = "campeonato")
     private List<Partida> partidas;
 
@@ -26,13 +29,14 @@ public class Campeonato {
     public Campeonato() {
     }
 
-    public Campeonato(Long id, String campNome, int qtdJogadores, int qtdPartidas, List<Jogador> jogadores, List<Partida> partidas) {
+    public Campeonato(Long id, String campNome, int qtdJogadores, int qtdPartidas, CampTypes estiloPontuacao, List<Jogador> jogadores, List<Partida> partidas) {
         this.id = id;
         this.campNome = campNome;
         this.qtdJogadores = qtdJogadores;
         this.qtdPartidas = qtdPartidas;
         this.jogadores = jogadores;
         this.partidas = partidas;
+        this.estiloPontuacao = estiloPontuacao;
     }
 
     public Long getId() {
@@ -65,6 +69,14 @@ public class Campeonato {
 
     public void setQtdPartidas(int qtdPartidas) {
         this.qtdPartidas = qtdPartidas;
+    }
+
+    public CampTypes getEstiloPontuacao() {
+        return estiloPontuacao;
+    }
+
+    public void setEstiloPontuacao(CampTypes estiloPontuacao) {
+        this.estiloPontuacao = estiloPontuacao;
     }
 
     public List<Jogador> getJogadores() {

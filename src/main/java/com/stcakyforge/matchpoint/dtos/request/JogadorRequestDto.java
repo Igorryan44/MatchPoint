@@ -10,6 +10,6 @@ public record JogadorRequestDto(
         @NotEmpty(message = "O nome do time não pode ser branco")
         String time,
 
-        @NotEmpty(message = "O nome do campeonato não pode ser branco")
-        String campeonato
+        @NotEmpty(message = "O id do campeonato não pode ser branco")
+        Long Idcampeonato
 ) {}
