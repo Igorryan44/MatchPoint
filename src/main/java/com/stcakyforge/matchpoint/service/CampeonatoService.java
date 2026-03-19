@@ -9,7 +9,6 @@ import com.stcakyforge.matchpoint.model.Campeonato;
 import com.stcakyforge.matchpoint.model.Jogador;
 import com.stcakyforge.matchpoint.repository.CampeonatoRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -28,20 +27,15 @@ public class CampeonatoService {
         this.jogadorMapper = jogadorMapper;
     }
 
-    public ResponseEntity<CampeonatoResponseDto> criarCampeonato(CampeonatoRequestDto campeonatoRequestDto) {
-        return ResponseEntity.ok(mapper.toDto(campeonatoRepository.save(mapper.toEntity(campeonatoRequestDto))));
+    public CampeonatoResponseDto criarCampeonato(CampeonatoRequestDto campeonatoRequestDto) {
+        return mapper.toDto(campeonatoRepository.save(mapper.toEntity(campeonatoRequestDto)));
     }
 
-    public ResponseEntity<Void> deletarCampeonato(Long id) {
-        campeonatoRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public List<CampeonatoResponseDto> listarCampeopnatos() {
+        return mapper.toDto(campeonatoRepository.findAll());
     }
 
-    public ResponseEntity<List<CampeonatoResponseDto>> listarCampeopnatos() {
-        return ResponseEntity.ok(mapper.toDto(campeonatoRepository.findAll()));
-    }
-
-    public ResponseEntity<List<JogadorResponseDto>> rankingJogadoresPorCampeonato(Long campeonatoId) {
+    public List<JogadorResponseDto> rankingJogadoresPorCampeonato(Long campeonatoId) {
 
         Campeonato campeonato = campeonatoRepository.findById(campeonatoId).orElseThrow(() -> new EntityNotFoundException("Campeonato não encontrado"));
 
@@ -49,17 +43,20 @@ public class CampeonatoService {
                 .sorted(Comparator.comparingInt(Jogador::getPontos).reversed())
                 .toList();
 
-        return ResponseEntity.ok(jogadorMapper.toDto(ranking));
+        return jogadorMapper.toDto(ranking);
     }
 
-    public ResponseEntity<List<JogadorResponseDto>> rankingJogadoresGeral() {
+    public List<JogadorResponseDto> rankingJogadoresGeral() {
 
         List<Jogador> ranking = campeonatoRepository.findAll()
                 .stream().flatMap(c -> c.getJogadores().stream())
                 .sorted(Comparator.comparingInt(Jogador::getPontos).reversed())
                 .toList();
 
-        return ResponseEntity.ok(jogadorMapper.toDto(ranking));
+        return jogadorMapper.toDto(ranking);
+    }
+    public void deletarCampeonato(Long id) {
+        campeonatoRepository.deleteById(id);
     }
 
 }
