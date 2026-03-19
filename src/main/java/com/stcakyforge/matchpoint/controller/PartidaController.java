@@ -2,6 +2,7 @@ package com.stcakyforge.matchpoint.controller;
 
 import com.stcakyforge.matchpoint.dtos.response.PartidaResponseDto;
 import com.stcakyforge.matchpoint.service.PartidaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class PartidaController {
 
     @PostMapping
     public ResponseEntity<PartidaResponseDto> criarPartida (@RequestBody Long idJogador1, @RequestBody Long idJogador2) {
-        return ResponseEntity.ok(partidaService.criarPartida(idJogador1, idJogador2));
+        return ResponseEntity.status(HttpStatus.CREATED).body(partidaService.criarPartida(idJogador1, idJogador2));
     }
 
     @GetMapping("/{id}")

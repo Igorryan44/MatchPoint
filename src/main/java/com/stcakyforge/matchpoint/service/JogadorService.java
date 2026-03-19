@@ -8,7 +8,6 @@ import com.stcakyforge.matchpoint.model.Jogador;
 import com.stcakyforge.matchpoint.repository.CampeonatoRepository;
 import com.stcakyforge.matchpoint.repository.JogadorRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,14 +25,18 @@ public class JogadorService {
         this.campeonatoRepository = campeonatoRepository;
     }
 
-    public ResponseEntity<JogadorResponseDto> criarJogador(JogadorRequestDto request) {
-        return ResponseEntity.ok(mapper.toDto(jogadorRepository.save(mapper.toEntity(request))));
+    public JogadorResponseDto criarJogador(JogadorRequestDto request) {
+        return mapper.toDto(jogadorRepository.save(mapper.toEntity(request)));
     }
 
-    public ResponseEntity<JogadorResponseDto> pegarJogadorPorId(Long id) {
-        return ResponseEntity.ok(mapper.toDto(jogadorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado!"))));
+    public List<JogadorResponseDto> pegarTodosJogadores() {
+        return mapper.toDto(jogadorRepository.findAll());
     }
 
+    public JogadorResponseDto pegarJogadorPorId(Long id) {
+        return mapper.toDto(jogadorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado!")));
+    }
+    
     public int saldoGols(Long id) {
         Jogador jogador = jogadorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado!"));
         int saldoGols = jogador.getGolsMarcados() - jogador.getGolsSofridos();
@@ -44,13 +47,13 @@ public class JogadorService {
         return jogador.getSaldoGols();
     }
 
-    public ResponseEntity<List<JogadorResponseDto>> pegarJogadoresPorCampeopnato(Long idCampeonato) throws Throwable {
+    public List<JogadorResponseDto> pegarJogadoresPorCampeopnato(Long idCampeonato) throws Throwable {
         if (campeonatoRepository.findById(idCampeonato).isPresent()) {
             Campeonato campeonato = campeonatoRepository.findById(idCampeonato).orElseThrow(() -> new EntityNotFoundException("Campeonato não encontrado!"));
 
-            return ResponseEntity.ok(mapper.toDto(campeonato.getJogadores()));
+            return mapper.toDto(campeonato.getJogadores());
         }
-        return ResponseEntity.notFound().build();
+        return null;
     }
 
     public void deletarJogador(Long id){
