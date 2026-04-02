@@ -1,8 +1,10 @@
 package com.stcakyforge.matchpoint.service;
 
 
+import com.stcakyforge.matchpoint.dtos.response.JogadorResponseDto;
 import com.stcakyforge.matchpoint.dtos.response.PartidaResponseDto;
 import com.stcakyforge.matchpoint.dtos.response.PegarPartidasDto;
+import com.stcakyforge.matchpoint.mapper.JogadorMapper;
 import com.stcakyforge.matchpoint.mapper.PartidaMapper;
 import com.stcakyforge.matchpoint.mapper.PegarPartidasMapper;
 import com.stcakyforge.matchpoint.model.Jogador;
@@ -25,13 +27,15 @@ public class PartidaService {
     private final CampeonatoRepository campeonatoRepository;
     private final PartidaMapper partidaMapper;
     private final PegarPartidasMapper pegarPartidaMapper;
+    private final JogadorMapper jogadorMapper;
 
-    public PartidaService(PartidaRepository partidaRepository, PartidaMapper partidaMapper, CampeonatoRepository campeonatoRepository, JogadorRepository jogadorRepository, PegarPartidasMapper pegarPartidaMapper) {
+    public PartidaService(PartidaRepository partidaRepository, PartidaMapper partidaMapper, CampeonatoRepository campeonatoRepository, JogadorRepository jogadorRepository, PegarPartidasMapper pegarPartidaMapper, JogadorMapper jogadorMapper) {
         this.partidaRepository = partidaRepository;
         this.partidaMapper = partidaMapper;
         this.campeonatoRepository = campeonatoRepository;
         this.jogadorRepository = jogadorRepository;
         this.pegarPartidaMapper = pegarPartidaMapper;
+        this.jogadorMapper = jogadorMapper;
     }
 
     public PartidaResponseDto criarPartida(Long idJogador1, Long idJogador2) throws AccessDeniedException {
@@ -40,16 +44,20 @@ public class PartidaService {
         Jogador player2 = jogadorRepository.findById(idJogador2).orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado"));
 
         if (!player1.getCampeonato().getId().equals(player2.getCampeonato().getId())) {
-
             throw new AccessDeniedException("Não é possível criar partida de jogadores de campeonatos diferentes!");
         }
             newPartida.setJogador1(player1);
             newPartida.setJogador2(player2);
 
             player1.setPartidasTotais(player1.getPartidasTotais() + 1);
+            player1.setPartidasComoJogador1(player1.getPartidasComoJogador1() + 1);
             player2.setPartidasTotais(player2.getPartidasTotais() + 1);
+            player2.setPartidasComoJogador2(player2.getPartidasComoJogador2() + 1);
 
-            newPartida.setCampeonato(campeonatoRepository.findById(player1.getCampeonato().getId()).orElseThrow(() -> new EntityNotFoundException("Campeonato não encontrado")));
+            jogadorRepository.save(player1);
+            jogadorRepository.save(player2);
+
+        newPartida.setCampeonato(campeonatoRepository.findById(player1.getCampeonato().getId()).orElseThrow(() -> new EntityNotFoundException("Campeonato não encontrado")));
 
         return partidaMapper.toDto(partidaRepository.save(newPartida));
     }

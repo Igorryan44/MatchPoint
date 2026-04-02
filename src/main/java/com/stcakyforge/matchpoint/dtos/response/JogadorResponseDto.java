@@ -1,5 +1,7 @@
 package com.stcakyforge.matchpoint.dtos.response;
 
+import java.util.List;
+
 public record JogadorResponseDto(
         Long id,
 
@@ -25,11 +27,11 @@ public record JogadorResponseDto(
 
         Long idCampeonato,
 
-        Long partidasComoJogador1,
+        int partidasComoJogador1,
 
-        Long partidasComoJogador2,
+        int partidasComoJogador2,
 
-        Long partidasIds,
+        List<Long> partidasIds,
 
         int partidasTotais
 ) {}
