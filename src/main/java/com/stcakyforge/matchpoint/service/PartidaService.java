@@ -1,21 +1,21 @@
 package com.stcakyforge.matchpoint.service;
 
 
-import com.stcakyforge.matchpoint.dtos.response.JogadorResponseDto;
 import com.stcakyforge.matchpoint.dtos.response.PartidaResponseDto;
-import com.stcakyforge.matchpoint.dtos.response.PegarPartidasDto;
-import com.stcakyforge.matchpoint.mapper.JogadorMapper;
 import com.stcakyforge.matchpoint.mapper.PartidaMapper;
-import com.stcakyforge.matchpoint.mapper.PegarPartidasMapper;
+import com.stcakyforge.matchpoint.model.Campeonato;
 import com.stcakyforge.matchpoint.model.Jogador;
 import com.stcakyforge.matchpoint.model.Partida;
 import com.stcakyforge.matchpoint.repository.CampeonatoRepository;
 import com.stcakyforge.matchpoint.repository.JogadorRepository;
 import com.stcakyforge.matchpoint.repository.PartidaRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,16 +26,12 @@ public class PartidaService {
     private final JogadorRepository jogadorRepository;
     private final CampeonatoRepository campeonatoRepository;
     private final PartidaMapper partidaMapper;
-    private final PegarPartidasMapper pegarPartidaMapper;
-    private final JogadorMapper jogadorMapper;
 
-    public PartidaService(PartidaRepository partidaRepository, PartidaMapper partidaMapper, CampeonatoRepository campeonatoRepository, JogadorRepository jogadorRepository, PegarPartidasMapper pegarPartidaMapper, JogadorMapper jogadorMapper) {
+    public PartidaService(PartidaRepository partidaRepository, PartidaMapper partidaMapper, CampeonatoRepository campeonatoRepository, JogadorRepository jogadorRepository) {
         this.partidaRepository = partidaRepository;
         this.partidaMapper = partidaMapper;
         this.campeonatoRepository = campeonatoRepository;
         this.jogadorRepository = jogadorRepository;
-        this.pegarPartidaMapper = pegarPartidaMapper;
-        this.jogadorMapper = jogadorMapper;
     }
 
     public PartidaResponseDto criarPartida(Long idJogador1, Long idJogador2) throws AccessDeniedException {
@@ -66,13 +62,13 @@ public class PartidaService {
         return partidaMapper.toDto(partidaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado")));
     }
 
-    public List<PegarPartidasDto> pegarPartidasPorCampeonatos () {
+    public List<PartidaResponseDto> pegarPartidas () {
+        return partidaMapper.toDto(partidaRepository.findAll());
+    }
 
-        List<Partida> ranking = campeonatoRepository.findAll()
-                .stream().flatMap(p -> p.getPartidas().stream().sorted())
-                .toList();
+    public List<PartidaResponseDto> pegarPartidasPorCampeonato (Long id) {
 
-        return pegarPartidaMapper.toDto(ranking);
+        return partidaMapper.toDto(partidaRepository.findByCampeonatoId(id));
     }
 
     public void deletarPartida(Long id) {

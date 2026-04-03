@@ -2,7 +2,6 @@ package com.stcakyforge.matchpoint.controller;
 
 import com.stcakyforge.matchpoint.dtos.request.PartidaRequestDto;
 import com.stcakyforge.matchpoint.dtos.response.PartidaResponseDto;
-import com.stcakyforge.matchpoint.dtos.response.PegarPartidasDto;
 import com.stcakyforge.matchpoint.service.PartidaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +31,13 @@ public class PartidaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PegarPartidasDto>> pegarPartidas () {
-        return ResponseEntity.ok(partidaService.pegarPartidasPorCampeonatos());
+    public ResponseEntity<List<PartidaResponseDto>> pegarPartidas () {
+        return ResponseEntity.ok(partidaService.pegarPartidas());
+    }
+
+    @GetMapping("/champ/{id}")
+    public ResponseEntity<List<PartidaResponseDto>> pegarPartidasPorCampeonato (@PathVariable Long id) {
+        return ResponseEntity.ok(partidaService.pegarPartidasPorCampeonato(id));
     }
 
     @GetMapping("/{id}")
@@ -50,9 +54,8 @@ public class PartidaController {
         return ResponseEntity.notFound().build();
     }
 
-
     @PostMapping("/score/{id}")
-    public ResponseEntity<PartidaResponseDto> placarGols(@PathVariable Long id, int golsJogador1, int golsJogador2) {
+    public ResponseEntity<PartidaResponseDto> placarGols(@PathVariable Long id, @RequestBody int golsJogador1, int golsJogador2) {
         return ResponseEntity.ok(partidaService.placarGols(id, golsJogador1, golsJogador2));
     }
 
