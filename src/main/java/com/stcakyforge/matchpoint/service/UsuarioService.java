@@ -35,14 +35,14 @@ public class UsuarioService {
         }
 
         Usuario usuario = new Usuario();
-        usuario.setNome(requestDto.username());
+        usuario.setName(requestDto.name());
         usuario.setEmail(requestDto.email());
-        usuario.setSenha(passwordEncoder.encode(requestDto.senha()));
+        usuario.setUserPassword(passwordEncoder.encode(requestDto.userPassword()));
 
         usuarioRepository.save((usuario));
 
         return new RegisterUserResponseDto(
-                usuario.getUsername(),
+                usuario.getName(),
                 usuario.getEmail()
         );
     }
@@ -64,7 +64,7 @@ public class UsuarioService {
         Usuario oldUsuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado no banco de dados"));
 
         oldUsuario.setId(id);
-        oldUsuario.setNome(!Objects.equals(usuario.username(), oldUsuario.getUsername()) ? usuario.username() : oldUsuario.getUsername());
+        oldUsuario.setName(!Objects.equals(usuario.name(), oldUsuario.getUsername()) ? usuario.name() : oldUsuario.getUsername());
 
         return mapper.toDto(usuarioRepository.save(oldUsuario));
     }
@@ -75,7 +75,7 @@ public class UsuarioService {
 
         String passwordEnc = passwordEncoder.encode(novaSenha.novaSenha());
 
-        usuario.setSenha(passwordEnc);
+        usuario.setUserPassword(passwordEnc);
         usuarioRepository.save(usuario);
     }
 

@@ -80,9 +80,9 @@ class UsuarioRepositoryTest {
 
     private void createUsuario(UsuarioRequestDto request) {
         Usuario newUsuario = new Usuario();
-        newUsuario.setNome(request.username());
+        newUsuario.setName(request.name());
         newUsuario.setEmail(request.email());
-        newUsuario.setSenha(request.senha());
+        newUsuario.setUserPassword(request.userPassword());
 
         entityManager.persist(newUsuario);
     }

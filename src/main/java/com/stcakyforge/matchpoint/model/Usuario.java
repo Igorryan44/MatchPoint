@@ -16,21 +16,21 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String name;
 
     @Column(unique = true)
     private String email;
 
-    private String senha;
+    private String userPassword;
 
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String senha) {
+    public Usuario(Long id, String name, String email, String userPassword) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.email = email;
-        this.senha = senha;
+        this.userPassword = userPassword;
     }
 
     public Long getId() {
@@ -41,12 +41,12 @@ public class Usuario implements UserDetails {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -57,13 +57,14 @@ public class Usuario implements UserDetails {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -71,7 +72,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return this.senha;
+        return this.userPassword;
     }
 
     @Override
