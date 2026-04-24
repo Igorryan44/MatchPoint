@@ -1,7 +1,6 @@
 package com.stcakyforge.matchpoint.dtos.response;
 
 import com.stcakyforge.matchpoint.enums.CampTypes;
-import com.stcakyforge.matchpoint.model.Jogador;
 
 import java.time.LocalDate;
 import java.util.List;

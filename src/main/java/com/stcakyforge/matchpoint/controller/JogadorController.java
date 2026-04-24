@@ -3,8 +3,6 @@ package com.stcakyforge.matchpoint.controller;
 import com.stcakyforge.matchpoint.dtos.request.JogadorRequestDto;
 import com.stcakyforge.matchpoint.dtos.response.JogadorResponseDto;
 import com.stcakyforge.matchpoint.service.JogadorService;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
