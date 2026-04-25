@@ -2,10 +2,9 @@ services:
   db:
     image: postgres:16
     container_name: postgres_db
+    restart: always
     env_file:
       - .env
-    ports:
-      - "6789:5432"
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USERNAME}
@@ -20,29 +19,28 @@ services:
       start_period: 10s
 
   matchpoint:
-    build: .
+    image: seuusuario/matchpoint:v1.0.0
     container_name: matchpoint
+    restart: always
     env_file:
       - .env
     ports:
       - "8080:8080"
-    volumes:
-      - maven_cache:/root/.m2
     environment:
       SPRING_DATASOURCE_URL: ${DB_URI}
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: true
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
-      SPRING_DEVTOOLS_LIVERELOAD_ENABLED: true
+
       SECURITY_JWT_SECRET: ${JWT_SECRET}
+      SPRING_PROFILES_ACTIVE: prod
+
     depends_on:
       db:
         condition: service_healthy
 
 volumes:
   postgres_data:
-  maven_cache:
