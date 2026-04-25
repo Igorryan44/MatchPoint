@@ -1,7 +1,7 @@
 package com.stcakyforge.matchpoint.service;
 
 
-import com.stcakyforge.matchpoint.Exception.InvalidFormatException;
+import com.stcakyforge.matchpoint.exception.InvalidFormatException;
 import com.stcakyforge.matchpoint.dtos.response.PartidaResponseDto;
 import com.stcakyforge.matchpoint.mapper.PartidaMapper;
 import com.stcakyforge.matchpoint.model.Jogador;
@@ -91,9 +91,6 @@ public class PartidaService {
         jogador1.setGolsSofridos(partida.getGolsJogador2());
         jogador2.setGolsSofridos(partida.getGolsJogador1());
 
-        partida.setCartaoAmareloJogador1(jogador1.getCartoesAmarelos());
-        partida.setCartaoAmareloJogador2(jogador2.getCartoesAmarelos());
-
         jogadorRepository.save(jogador1);
         jogadorRepository.save(jogador2);
 
@@ -111,9 +108,6 @@ public class PartidaService {
 
         jogador1.setCartoesAmarelos(jogador1.getCartoesAmarelos()+cartoesJogador1);
         jogador2.setCartoesAmarelos(jogador2.getCartoesAmarelos()+cartoesJogador2);
-
-        partida.setGolsJogador1(jogador1.getGolsMarcados());
-        partida.setGolsJogador2(jogador2.getGolsMarcados());
 
         jogadorRepository.save(jogador1);
         jogadorRepository.save(jogador2);

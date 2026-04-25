@@ -9,7 +9,7 @@ import com.stcakyforge.matchpoint.dtos.response.UsuarioResponseDto;
 import com.stcakyforge.matchpoint.mapper.UsuarioMapper;
 import com.stcakyforge.matchpoint.model.Usuario;
 import com.stcakyforge.matchpoint.repository.UsuarioRepository;
-import com.stcakyforge.matchpoint.Exception.ConflictException;
+import com.stcakyforge.matchpoint.exception.ConflictException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

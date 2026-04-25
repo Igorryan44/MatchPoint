@@ -13,6 +13,8 @@ public interface PartidaMapper {
 
     @Mapping(source = "campeonato.id", target = "idCampeonato")
     @Mapping(source = "partida.id", target = "idPartida")
+    @Mapping(source = "jogador1.id", target = "idJogador1")
+    @Mapping(source = "jogador2.id", target = "idJogador2")
     PartidaResponseDto toDto(Partida partida);
 
     List<PartidaResponseDto> toDto (List<Partida> partidas);

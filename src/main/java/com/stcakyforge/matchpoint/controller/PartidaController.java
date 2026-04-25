@@ -2,6 +2,7 @@ package com.stcakyforge.matchpoint.controller;
 
 import com.stcakyforge.matchpoint.dtos.request.PartidaRequestDto;
 import com.stcakyforge.matchpoint.dtos.response.PartidaResponseDto;
+import com.stcakyforge.matchpoint.exception.InvalidArgumentException;
 import com.stcakyforge.matchpoint.service.PartidaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class PartidaController {
     }
 
     @PostMapping
-    public ResponseEntity<PartidaResponseDto> criarPartida (@RequestBody PartidaRequestDto request) {
+    public ResponseEntity<PartidaResponseDto> criarPartidas (@RequestBody PartidaRequestDto request) throws InvalidArgumentException {
         return ResponseEntity.status(HttpStatus.CREATED).body(partidaService.criarPartida
             (
                 request.idJogador1(),

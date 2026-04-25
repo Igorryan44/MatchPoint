@@ -1,4 +1,4 @@
-package com.stcakyforge.matchpoint.Exception;
+package com.stcakyforge.matchpoint.exception;
 
 public class InvalidFormatException extends RuntimeException {
 

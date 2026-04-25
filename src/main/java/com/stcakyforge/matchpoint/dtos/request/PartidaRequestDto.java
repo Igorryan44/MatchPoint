@@ -4,8 +4,8 @@ public record PartidaRequestDto (
 
         Long idJogador1,
         Long idJogador2,
-        int golsJogador1,
-        int golsJogador2,
-        int cartaoAmareloJogador1,
-        int cartaoAmareloJogador2
+        Integer golsJogador1,
+        Integer golsJogador2,
+        Integer cartaoAmareloJogador1,
+        Integer cartaoAmareloJogador2
 ){}

@@ -6,6 +6,7 @@ import com.stcakyforge.matchpoint.dtos.request.RegisterUserRequestDto;
 import com.stcakyforge.matchpoint.dtos.response.LoginResponseDto;
 import com.stcakyforge.matchpoint.dtos.response.RegisterUserResponseDto;
 
+import com.stcakyforge.matchpoint.exception.InvalidArgumentException;
 import com.stcakyforge.matchpoint.model.Usuario;
 import com.stcakyforge.matchpoint.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -37,6 +38,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login (@Valid @RequestBody LoginRequestDto request) {
 
+        try {
         UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.userPassword());
         Authentication authentication = authenticationManager.authenticate(userAndPass);
 
@@ -44,6 +46,10 @@ public class AuthController {
         String token = tokenConfig.generateToken(usuario);
 
         return ResponseEntity.ok(new LoginResponseDto(token));
+
+        } catch (Exception e) {
+            throw new InvalidArgumentException();
+        }
     }
 
     @PostMapping("/register")
